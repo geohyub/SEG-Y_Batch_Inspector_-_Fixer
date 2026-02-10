@@ -8,6 +8,9 @@ from typing import Callable
 
 from segy_toolbox.config import EditConfig
 from segy_toolbox.core.validator import SegyValidator
+from segy_toolbox.logging import get_logger
+
+logger = get_logger(__name__)
 from segy_toolbox.io.reader import SegyFileReader
 from segy_toolbox.io.writer import SegyFileWriter
 from segy_toolbox.models import (
@@ -240,5 +243,6 @@ class SegyEngine:
             self._on_stage(stage_idx, self.STAGES[stage_idx][1])
 
     def _log(self, message: str) -> None:
+        logger.info(message)
         if self._on_log:
             self._on_log(message)

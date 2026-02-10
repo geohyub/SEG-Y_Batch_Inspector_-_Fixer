@@ -12,11 +12,14 @@ from segy_toolbox.core.binary_editor import BinaryHeaderEditor
 from segy_toolbox.core.ebcdic_editor import EbcdicEditor
 from segy_toolbox.core.trace_editor import TraceHeaderEditor
 from segy_toolbox.io.ebcdic import decode_textual_header, detect_encoding
+from segy_toolbox.logging import get_logger
 from segy_toolbox.models import (
     ChangeRecord,
     EditJob,
     EbcdicEdit,
 )
+
+logger = get_logger(__name__)
 
 
 class SegyFileWriter:
@@ -44,6 +47,7 @@ class SegyFileWriter:
             out_dir = Path(output_dir)
             out_dir.mkdir(parents=True, exist_ok=True)
             output_path = out_dir / source.name
+            logger.info("Copying %s -> %s", source.name, output_path)
             shutil.copy2(str(source), str(output_path))
             return str(output_path)
 
