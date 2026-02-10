@@ -11,8 +11,12 @@ from segy_toolbox import __version__
 
 @click.group()
 @click.version_option(__version__, prog_name="segy-toolbox")
-def cli():
+@click.option("--verbose", "-v", is_flag=True, help="Enable verbose logging")
+def cli(verbose: bool):
     """SEG-Y Batch Inspector & Fixer -- validate and edit SEG-Y file headers."""
+    import logging
+    from segy_toolbox.logging import setup_logging
+    setup_logging(level=logging.DEBUG if verbose else logging.WARNING)
 
 
 @cli.command()

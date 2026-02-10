@@ -6,3 +6,10 @@ nul
 *.egg-info/
 dist/
 build/
+.pytest_cache/
+htmlcov/
+coverage.xml
+.coverage
+*.log
+.venv/
+venv/

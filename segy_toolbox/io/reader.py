@@ -10,7 +10,10 @@ import pandas as pd
 import segyio
 
 from segy_toolbox.io.ebcdic import decode_textual_header, detect_encoding
+from segy_toolbox.logging import get_logger
 from segy_toolbox.models import FORMAT_BPS, SegyFileInfo
+
+logger = get_logger(__name__)
 
 # ---------------------------------------------------------------------------
 # Binary Header field mapping: name -> (BinField enum, dtype description)
@@ -112,6 +115,7 @@ class SegyFileReader:
         path = str(path)
         file_size = os.path.getsize(path)
         filename = Path(path).name
+        logger.info("Opening SEG-Y file: %s (%s bytes)", filename, f"{file_size:,}")
 
         info = SegyFileInfo(
             path=path,
@@ -185,6 +189,7 @@ class SegyFileReader:
             try:
                 return segyio.open(path, "r", **kwargs)
             except Exception as e:
+                logger.debug("Open strategy %s failed: %s", kwargs, e)
                 last_error = e
                 continue
         raise RuntimeError(

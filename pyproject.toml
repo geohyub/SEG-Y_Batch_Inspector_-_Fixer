@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "segy-toolbox"
+version = "1.0.0"
+description = "SEG-Y Batch Inspector & Fixer - validate and edit SEG-Y file headers"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Geoview" },
+]
+keywords = ["segy", "seismic", "geophysics", "header", "validation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "segyio>=1.9.0",
+    "click>=8.0",
+    "PyYAML>=6.0",
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+gui = [
+    "PySide6>=6.5",
+]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.1.0",
+]
+all = [
+    "segy-toolbox[gui,dev]",
+]
+
+[project.scripts]
+segy-toolbox = "segy_toolbox.__main__:main"
+
+[project.urls]
+Repository = "https://github.com/geohyub/SEG-Y_Batch_Inspector_-_Fixer"
+
+[tool.setuptools.packages.find]
+include = ["segy_toolbox*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.coverage.run]
+source = ["segy_toolbox"]
+omit = ["segy_toolbox/gui/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
